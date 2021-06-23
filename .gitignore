@@ -2,8 +2,11 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+#hidding documents
 Mission_to_Mars
 Practice.ipynb
+
 # C extensions
 *.so
 
