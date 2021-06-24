@@ -1,8 +1,11 @@
+import scraping
 from splinter import Browser
 from bs4 import BeautifulSoup as soup
 import pandas as pd
 import datetime as dt
 from webdriver_manager.chrome import ChromeDriverManager
+from flask import Flask, render_template, redirect, url_for
+from flask_pymongo import PyMongo
 
 app = Flask(__name__)
 
@@ -22,7 +25,7 @@ def scrape():
    mars.update({}, mars_data, upsert=True)
    return redirect('/', code=302)
 
-mars.update({}, mars_data, upsert=True)
+#mars.update({}, mars_data, upsert=True)
 
 if __name__ == "__main__":
    app.run()
