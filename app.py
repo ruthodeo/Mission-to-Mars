@@ -28,5 +28,6 @@ def scrape():
 #mars.update({}, mars_data, upsert=True)
 
 if __name__ == "__main__":
-   app.run()
+   #print(scrape_all())
+   app.run(debug= True)
 

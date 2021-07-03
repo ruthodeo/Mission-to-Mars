@@ -12,33 +12,23 @@ def scrape_all():
     browser = Browser('chrome', **executable_path, headless=True)
 
     news_title, news_paragraph = mars_news(browser)
-
+    
     # Run all scraping functions and store results in a dictionary
     data = {
         "news_title": news_title,
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now()
+        "last_modified": dt.datetime.now(),
+        "hemisphere_image_urls": hemisphere(browser)
     }
 
     # Stop webdriver and return data
     browser.quit()
     return data
-
-# Visit the mars nasa news site
-#url = 'https://redplanetscience.com'
-#browser.visit(url)
-# Optional delay for loading the page
-#browser.is_element_present_by_css('div.list_text', wait_time=1)
-
-#html = browser.html
-#news_soup = soup(html, 'html.parser')
-#slide_elem = news_soup.select_one('div.list_text')
-
-#slide_elem.find('div', class_='content_title')
-
+    
 def mars_news(browser):
+
 
     # Scrape Mars News
     # Visit the mars nasa news site
@@ -108,7 +98,52 @@ def mars_facts():
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html(classes="table table-striped")
 
+# Mars Hemispheres
+def hemisphere(browser):
+   
+     url = 'https://marshemispheres.com/'
+     browser.visit(url)
+
+     hemisphere_image_urls = []
+
+ # Parse the resulting html with soup
+     html = browser.html
+     img_soup = soup(html, 'html.parser')
+     img_soup
+
+# Convert the browser html to a soup object and then quit the browser
+     html = browser.html
+     img_soup = soup(html, 'html.parser')
+     results = img_soup.find_all('div', class_='description')
+     
+
+     for item in results:
+    # gets image title and adds title to list
+        title = item.find('h3').text
+    
+    # gets href, appends it to URL base, visits new page
+        href = item.find('a')['href']
+        img_url = url + href
+        browser.visit(img_url)
+        new_html = browser.html
+        new_soup = soup(new_html, 'html.parser')
+
+    # Gets image url from new page
+        image_tag = new_soup.find('div', class_ = 'downloads')
+        jpg_url = image_tag.find('a')['href']
+        jpg_url = url + jpg_url
+    
+    # Adds items to hemisphere_image_urls
+        imagen = dict({'img_url': jpg_url, 'title': title})
+        hemisphere_image_urls.append(imagen)
+
+   
+        browser.back()
+
+# 4. Print the list that holds the dictionary of each image url and title.
+        return hemisphere_image_urls
+
 if __name__ == "__main__":
 
     # If running as script, print scraped data
-    print(scrape_all())
+  print(scrape_all())
