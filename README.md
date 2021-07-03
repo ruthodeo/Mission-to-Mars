@@ -8,7 +8,8 @@
     Mongo Data base 
 ## Content 
     The Mission_to_Mars_Challenge.ipynb file with all the code used for scraping.
-    An updated scraping.py file.
+    scraping.py file.
     The app.py file.
     The index.html fileis inside the templete folder 
 ### Results
+      ![Screenshot (390)](https://user-images.githubusercontent.com/82455263/124345280-9325ab80-db9d-11eb-91bc-f3e040da5d1e.png)
